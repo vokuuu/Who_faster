@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Языковая дуэль — Игра</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="screen screen--game">
+    <header class="game-header">
+        <div class="players">
+            <div class="player-label player-label--left">
+                <span class="player-name">{{ player1_name }}</span>
+                <span class="player-score" id="score-p1">0</span>
+            </div>
+            <div class="round-info">
+                <span>Раунд <span id="current-round">1</span> / {{ max_rounds }}</span>
+            </div>
+            <div class="player-label player-label--right">
+                <span class="player-name">{{ player2_name }}</span>
+                <span class="player-score" id="score-p2">0</span>
+            </div>
+        </div>
+        <div class="timer-bar-container">
+            <div class="timer-bar" id="timer-bar"></div>
+        </div>
+        <div class="controls-hint">
+            <span>Игрок 1: W/S + Пробел|Shift</span>
+            <span>Игрок 2: ↑/↓ + Enter</span>
+            <span>Esc — выход в меню</span>
+        </div>
+    </header>
+
+    <main class="game-layout">
+        <section class="options options--left">
+            <ul id="options-left" class="options-list">
+                <!-- JS заполняет варианты -->
+            </ul>
+        </section>
+
+        <section class="image-center">
+            <div class="image-frame">
+                <img id="center-image" src="" alt="Слово" />
+            </div>
+        </section>
+
+        <section class="options options--right">
+            <ul id="options-right" class="options-list">
+                <!-- JS заполняет варианты -->
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        const GAME_CONFIG = {
+            maxRounds: {{ max_rounds }},
+            apiRoundUrl: "{{ url_for('api_round') }}",
+            resultsUrl: "{{ url_for('results') }}",
+            player1Name: "{{ player1_name }}",
+            player2Name: "{{ player2_name }}",
+        };
+    </script>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>
+
