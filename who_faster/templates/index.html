@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Языковая дуэль — Старт</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="screen screen--menu">
+    <div class="menu-container">
+        <h1 class="app-title">Языковая дуэль</h1>
+        <form method="post" class="menu-form">
+            <div class="form-row">
+                <label for="player1_name">Игрок 1 (слева)</label>
+                <input id="player1_name" name="player1_name" type="text" placeholder="Имя игрока 1" />
+            </div>
+            <div class="form-row">
+                <label for="player2_name">Игрок 2 (справа)</label>
+                <input id="player2_name" name="player2_name" type="text" placeholder="Имя игрока 2" />
+            </div>
+            <button type="submit" class="btn btn-primary">Начать игру</button>
+        </form>
+    </div>
+</body>
+</html>
+
