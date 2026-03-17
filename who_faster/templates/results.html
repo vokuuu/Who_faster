@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Языковая дуэль — Итоги</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="screen screen--results">
+    <div class="results-container">
+        <h1 class="app-title">Итоги игры</h1>
+
+        <div class="results-scores">
+            <div class="results-player">
+                <div class="results-name">{{ player1_name }}</div>
+                <div class="results-score">{{ score_p1 }}</div>
+            </div>
+            <div class="results-player">
+                <div class="results-name">{{ player2_name }}</div>
+                <div class="results-score">{{ score_p2 }}</div>
+            </div>
+        </div>
+
+        <p class="results-rounds">Сыграно раундов: {{ rounds_played }}</p>
+
+        {% if winner %}
+            <p class="results-winner">Победитель: <strong>{{ winner }}</strong> 🎉</p>
+        {% else %}
+            <p class="results-winner">Ничья!</p>
+        {% endif %}
+
+        <div class="results-actions">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">В главное меню</a>
+            <a href="{{ url_for('game') }}" class="btn btn-secondary">Сыграть ещё раз</a>
+        </div>
+    </div>
+</body>
+</html>
+
