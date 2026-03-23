@@ -105,7 +105,7 @@ def build_round_payload():
 
     # Добавляем опцию «Нет такого слова» (правильная, если слова действительно нет)
     none_option = {
-        "label": "Нет такого слова",
+        "label": "Нæй ахæм ныхас",
         "is_correct": not include_correct,
         "type": "none",
     }
