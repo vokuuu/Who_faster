@@ -14,7 +14,7 @@ body { font-family: sans-serif; background: #111; color: #fff; min-height: 100vh
 .timer-bar { height: 100%; background: #f97316; width: 0%; transition: width 0.1s; }
 
 .options-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.option-item { padding: 10px; background: #1e1e2e; border: 2px solid #444; cursor: pointer; display: flex; justify-content: space-between; }
+.option-item { padding: 10px; background: #1e1e2e; border: 2px solid #444; cursor: pointer; display: flex; justify-content: space-between; width: 275px;}
 
 .option-item--focused { border-color: #fff; }
 .option-item--left.option-item--selected { border-color: #4ade80; }
