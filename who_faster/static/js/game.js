@@ -97,11 +97,11 @@
 
             // Левый игрок (Игрок 1): W/S + Пробел|Shift
             // Правый игрок (Игрок 2): стрелки + Enter
-            if (side === "left") {
-                keySpan.textContent = "W/S, Space|Shift";
-            } else {
-                keySpan.textContent = "↑/↓, Enter";
-            }
+            //if (side === "left") {
+            //    keySpan.textContent = "W/S, Space|Shift";
+            //} else {
+            //    keySpan.textContent = "↑/↓, Enter";
+            //}
 
             li.appendChild(textSpan);
             li.appendChild(keySpan);
