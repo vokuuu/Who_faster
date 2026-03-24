@@ -11,11 +11,13 @@
         <form method="post" class="menu-form">
             <div class="form-row">
                 <label for="player1_name">Игрок 1 (слева)</label>
-                <input id="player1_name" name="player1_name" type="text" placeholder="Имя игрока 1" />
+                <input id="player1_name" name="player1_name" type="text" 
+                       placeholder="Игрок 1 (например: {{ example1 }})" />
             </div>
             <div class="form-row">
                 <label for="player2_name">Игрок 2 (справа)</label>
-                <input id="player2_name" name="player2_name" type="text" placeholder="Имя игрока 2" />
+                <input id="player2_name" name="player2_name" type="text" 
+                       placeholder="Игрок 2 (например: {{ example2 }})" />
             </div>
             <button type="submit" class="btn btn-primary">Начать игру</button>
         </form>
