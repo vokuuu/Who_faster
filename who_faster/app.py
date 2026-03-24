@@ -28,8 +28,19 @@ class Card(db.Model):
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        p1 = request.form.get("player1_name", "").strip() or "Игрок 1"
-        p2 = request.form.get("player2_name", "").strip() or "Игрок 2"
+        funny_names = [
+            "Æфсир æмæ фæткъуы", "Дзыхъхъыр", "Хъæдгом",
+            "Фыдджын", "Æртхор", "Тæрхъус", "Ленивый питон", "Быстрый удав"
+        ]
+
+        default_p1 = random.choice(funny_names)
+        default_p2 = random.choice([name for name in funny_names if name != default_p1])
+        
+        p1 = request.form.get("player1_name", "").strip() or default_p1
+        p2 = request.form.get("player2_name", "").strip() or default_p2
+
+         if p1 == p2:
+            p2 = random.choice([name for name in funny_names if name != p1])
 
         session["player1_name"] = p1
         session["player2_name"] = p2
@@ -37,7 +48,7 @@ def index():
 
         return redirect(url_for("game"))
 
-    return render_template("index.html")
+    return render_template("index.html", example1=default_p1, example2=default_p2)
 
 
 @app.route("/game")
