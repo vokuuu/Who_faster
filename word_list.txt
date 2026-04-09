@@ -1,0 +1,24 @@
+import os
+from database import GameDatabase
+
+def load_words_from_file(file_path='word_list.txt'):
+    """Загрузка слов из текстового файла в БД"""
+    db = GameDatabase()
+    
+    if not os.path.exists(file_path):
+        print(f"Файл {file_path} не найден")
+        return
+    
+    with open(file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#'):
+                # Ожидаем формат: осетинское_слово:русский_перевод:категория
+                parts = line.split(':')
+                if len(parts) >= 2:
+                    word_os = parts[0].strip()
+                    word_ru = parts[1].strip()
+                    category = parts[2].strip() if len(parts) > 2 else None
+                    
+                    word_id = db.add_word(word_os, word_ru, category)
+                    print(f"Добавлено слово: {word_os} - {word_ru} (ID: {word_id})")
