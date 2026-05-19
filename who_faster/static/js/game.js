@@ -89,22 +89,8 @@
             li.dataset.correct = opt.is_correct ? "1" : "0";
             li.dataset.type = opt.type;
 
-            const textSpan = document.createElement("span");
-            textSpan.textContent = opt.label;
+            li.textContent = opt.label;  // Просто текст, без дополнительных элементов
 
-            const keySpan = document.createElement("span");
-            keySpan.className = "option-key";
-
-            // Левый игрок (Игрок 1): W/S + Пробел|Shift
-            // Правый игрок (Игрок 2): стрелки + Enter
-            //if (side === "left") {
-            //    keySpan.textContent = "W/S, Space|Shift";
-            //} else {
-            //    keySpan.textContent = "↑/↓, Enter";
-            //}
-
-            li.appendChild(textSpan);
-            li.appendChild(keySpan);
             container.appendChild(li);
         });
     }
@@ -291,6 +277,7 @@
         } else {
             currentRound += 1;
             roundEl.textContent = String(currentRound);
+            updateDots(currentRound, maxRounds);  // <--- ЭТО ДОБАВИТЬ
             setTimeout(() => {
                 loadRound();
             }, 900);
@@ -323,7 +310,7 @@
                     alert(data && data.error ? data.error : "Ошибка загрузки раунда");
                     return;
                 }
-
+               
                 centerImageEl.src = data.image_url;
                 centerImageEl.alt = data.correct_word || "Слово";
 
@@ -456,6 +443,24 @@
                 break;
         }
     });
+
+        // Простая функция для обновления кружочков
+    function updateDots(current, total) {
+        const container = document.getElementById('round-dots');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        for (let i = 1; i <= total; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (i < current) dot.classList.add('completed');
+            if (i === current) dot.classList.add('active');
+            container.appendChild(dot);
+        }
+    }
+
+    // Инициализация кружочков
+    updateDots(currentRound, maxRounds);
 
     // Старт
     loadRound();

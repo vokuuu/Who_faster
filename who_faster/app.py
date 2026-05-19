@@ -40,8 +40,18 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/game")
+@app.route("/game", methods=["GET", "POST"])  # ← ДОБАВИЛИ POST
 def game():
+    # Если пришли POST-данные из формы регистрации
+    if request.method == "POST":
+        p1 = request.form.get("player1_name", "").strip() or "Игрок 1"
+        p2 = request.form.get("player2_name", "").strip() or "Игрок 2"
+        session["player1_name"] = p1
+        session["player2_name"] = p2
+        session["max_rounds"] = 10
+        return redirect(url_for("game"))
+    
+    # Проверяем, есть ли имена в сессии
     if "player1_name" not in session or "player2_name" not in session:
         return redirect(url_for("index"))
 
@@ -105,7 +115,7 @@ def build_round_payload():
 
     # Добавляем опцию «Нет такого слова» (правильная, если слова действительно нет)
     none_option = {
-        "label": "Нæй ахæм ныхас",
+        "label": "Нет такого слова",
         "is_correct": not include_correct,
         "type": "none",
     }
@@ -167,5 +177,3 @@ def results():
 if __name__ == "__main__":
     # Для локального запуска
     app.run(debug=True)
-
-

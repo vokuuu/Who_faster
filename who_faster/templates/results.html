@@ -2,37 +2,67 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <title>Языковая дуэль — Итоги</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>ЧИ РӔВДЗДӔР — Итоги дуэли</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="screen screen--results">
-    <div class="results-container">
-        <h1 class="app-title">Итоги игры</h1>
-
-        <div class="results-scores">
-            <div class="results-player">
-                <div class="results-name">{{ player1_name }}</div>
-                <div class="results-score">{{ score_p1 }}</div>
+<body>
+    <!-- ОКНО РЕЗУЛЬТАТОВ ДУЭЛИ -->
+    <div class="modal-overlay results-modal" style="display: flex;">
+        <div class="modal results-container">
+            <!-- Корона (изображение) -->
+            <img src="{{ url_for('static', filename='images/corown.png') }}" alt="Корона" class="crown-image" />
+            
+            <!-- Заголовок -->
+            <div class="results-title-main">ДУЭЛЫ УÆЛАХИЗДЗАУ</div>
+            <div class="results-title-sub">ПОБЕДИТЕЛЬ ДУЭЛИ</div>
+            
+            <!-- Имя победителя (большими буквами, без фона) -->
+            <div class="winner-name">
+                {% if winner %}
+                    {{ winner }}
+                {% else %}
+                    НИЧЬЯ!
+                {% endif %}
             </div>
-            <div class="results-player">
-                <div class="results-name">{{ player2_name }}</div>
-                <div class="results-score">{{ score_p2 }}</div>
+            
+            <!-- Блоки с баллами игроков -->
+            <div class="results-players">
+                <div class="results-player-card {% if winner == player1_name %}results-player-card--winner{% endif %}">
+                    <div class="results-player-name">{{ player1_name }}</div>
+                    <div class="results-player-score">{{ score_p1 }}</div>
+                </div>
+                <div class="results-player-card {% if winner == player2_name %}results-player-card--winner{% endif %}">
+                    <div class="results-player-name">{{ player2_name }}</div>
+                    <div class="results-player-score">{{ score_p2 }}</div>
+                </div>
             </div>
-        </div>
-
-        <p class="results-rounds">Сыграно раундов: {{ rounds_played }}</p>
-
-        {% if winner %}
-            <p class="results-winner">Победитель: <strong>{{ winner }}</strong> 🎉</p>
-        {% else %}
-            <p class="results-winner">Ничья!</p>
-        {% endif %}
-
-        <div class="results-actions">
-            <a href="{{ url_for('index') }}" class="btn btn-primary">В главное меню</a>
-            <a href="{{ url_for('game') }}" class="btn btn-secondary">Сыграть ещё раз</a>
+            
+            <!-- Кнопки (друг под другом) -->
+            <div class="results-buttons">
+                <!-- Кнопка 2: СӔЙРАГ МЕНЮ -->
+                <button class="results-btn results-btn--menu" onclick="goToMenu()">
+                    <span class="results-btn-main">СÆЙРАГ МЕНЮ</span>
+                    <span class="results-btn-sub">главное меню</span>
+                </button>
+                <!-- Кнопка 1: НОГ ДУЭЛ -->
+                <button class="results-btn results-btn--rematch" onclick="playAgain()">
+                    <span class="results-btn-main">НОГ ДУЭЛ</span>
+                    <span class="results-btn-sub">новая дуэль</span>
+                </button>
+                
+            </div>
         </div>
     </div>
+
+    <script>
+        function playAgain() {
+            window.location.href = "{{ url_for('game') }}";
+        }
+        
+        function goToMenu() {
+            window.location.href = "{{ url_for('index') }}";
+        }
+</script>
 </body>
 </html>
-

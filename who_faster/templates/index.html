@@ -2,26 +2,155 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <title>Языковая дуэль — Старт</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>ЧИ РӔВДЗДӔР — Языковая дуэль</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="screen screen--menu">
-    <div class="menu-container">
-        <h1 class="app-title">Языковая дуэль</h1>
-        <form method="post" class="menu-form">
-            <div class="form-row">
-                <label for="player1_name">Игрок 1 (слева)</label>
-                <input id="player1_name" name="player1_name" type="text" 
-                       placeholder="Игрок 1 (например: {{ example1 }})" />
+<body>
+    <!-- НАЧАЛЬНЫЙ ЭКРАН -->
+    <div class="start-screen">
+        <!-- Декоративные колеса -->
+        <div class="wheel wheel-1"></div>
+        <div class="wheel wheel-2"></div>
+        
+        <!-- Шапка с иконками -->
+        <div class="header">
+            <div class="profile-icon" onclick="alert('Профиль')"></div>
+            <div class="menu-icon" onclick="alert('Меню')">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <div class="form-row">
-                <label for="player2_name">Игрок 2 (справа)</label>
-                <input id="player2_name" name="player2_name" type="text" 
-                       placeholder="Игрок 2 (например: {{ example2 }})" />
-            </div>
-            <button type="submit" class="btn btn-primary">Начать игру</button>
-        </form>
+        </div>
+        
+        <!-- Заголовок игры -->
+        <h1 class="game-title">ЧИ РӔВДЗДӔР</h1>
+        
+        <!-- Кнопки -->
+        <div class="buttons">
+            <button class="btn btn-play" onclick="openRegister()">
+                <span class="btn-main-text">хъазын</span>
+                <span class="btn-sub-text">играть</span>
+            </button>
+            <button class="btn btn-rules" onclick="openRules()">
+                <span class="btn-main-text">æгъдæуттæ</span>
+                <span class="btn-sub-text">правила</span>
+            </button>
+        </div>
     </div>
+
+    <!-- ОКНО РЕГИСТРАЦИИ -->
+    <div id="registerModal" class="modal-overlay register-modal">
+        <div class="modal">
+            <div class="close-icon" onclick="closeRegister()">×</div>
+            <div class="register-title">
+                <div class="register-title-main">РЕГИСТРАЦИ</div>
+                <div class="register-title-sub">РЕГИСТРАЦИЯ</div>
+            </div>
+            <form method="post" action="/game" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <div class="form-group">
+                    <label class="form-label">НЫФФЫССУТ УÆ НОМ</label>
+                    <input type="text" name="player1_name" class="form-input" placeholder="ХÆРÆГ" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ВВЕДИТЕ СВОЕ ИМЯ</label>
+                    <input type="text" name="player2_name" class="form-input" placeholder="ТЕУА" required>
+                </div>
+                <button type="submit" class="btn-start">
+                    <span class="btn-start-main">ХЪАЗТ РАЙДАЙЫН</span>
+                    <span class="btn-start-sub">начать игру</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ОКНО ПРАВИЛ (осетинская версия) -->
+    <div id="rulesModalOs" class="modal-overlay rules-modal">
+        <div class="modal">
+            <div class="close-icon" onclick="closeRules()">×</div>
+            <div class="rules-title" id="rulesTitleOs">Хъазты æгъдæуттæ</div>
+            <div class="modal-content">
+                <div class="rules-text" id="rulesTextOs">
+                    Хъазты нысан:<br>
+                    Дæ ныхмæлæууæгæй фылдæр очкотæ 10 раунды æрæмбырд кæн. Уæлахиздзау уыдзæн, ирон æвзаджы фæрстытæн тагъддæр æмæ растдæр дзуапп чи дæтта, уый.<br><br>
+                    Куыд цæуы раунд:<br>
+                    1. Алы туры райдайæны дæр экраныл фæзыны ныв æмæ цалдæр дзуаппы варианты (иронау). Уæ хæс у æвдыст дзуапп равзарын.<br>
+                    2. Раунд куы райдайы, уæд дыууæ хъазæджы дæр фенынц фарст. Фыццаг хъазæг, кæцы ратта раст дзуапп, уайтагъд райсдзæн 100 баллы.<br>
+                    3. Куы сбæрæг вæййы раунды уæлахиздзау, уæд райдайы цыбыр рæстæг. Дыккаг хъазæгæн дæр ис цалдæр секунды, цæмæй ратта раст дзуапп.<br>
+                    - Куы йæ къухы бафта, уæд разамонæгæй къаддæр баллтæ райсы (зæгъæм, 50 кæнæ 30, цас рæстæг ма дзы баззад, уымæ гæсгæ).<br>
+                    - Афоныл куы нæ ахиза, кæнæ куы фæрæдийа, уæд уыцы раундæн баллтæ нæ лæвæрд цæуы.<br>
+                    Баллтæ æвæрд куы æрцæуой, уæд иннæ тур райдайы ног нывæй.<br>
+                    Кæронбæттæн туры фæстæ нымад цæуынц æмтгæйон баллтæ. Уæлахиз кæны, æппæты фылдæр æмтгæйон нымæц кæмæн ис, уыцы хъазæг.
+                </div>
+            </div>
+            <div class="lang-switch" onclick="switchToRu()">РУС</div>
+        </div>
+    </div>
+
+    <!-- ОКНО ПРАВИЛ (русская версия) -->
+    <div id="rulesModalRu" class="modal-overlay rules-modal" style="display: none;">
+        <div class="modal">
+            <div class="close-icon" onclick="closeRules()">×</div>
+            <div class="rules-title" id="rulesTitleRu">Правила игры</div>
+            <div class="modal-content">
+                <div class="rules-text" id="rulesTextRu">
+                    <strong>Цель игры:</strong><br>
+                    Набрать больше очков, чем соперник, за 10 раундов. Побеждает тот, кто быстрее и точнее отвечает на вопросы по осетинскому языку.<br><br>
+                    <strong>Как проходит раунд:</strong><br>
+                    1. В начале каждого раунда на экране появляется картинка и несколько вариантов ответа (на осетинском языке). Ваша задача — выбрать, что именно изображено.<br>
+                    2. Как только раунд начался, оба игрока видят вопрос. Тот, кто первым даст правильный ответ, мгновенно получает 100 баллов.<br>
+                    3. После того как победитель раунда определён, запускается короткий таймер. У второго игрока есть несколько секунд, чтобы тоже дать правильный ответ.<br>
+                    - Если он успевает, то получает меньше баллов, чем лидер (например, 50 или 30 — в зависимости от оставшегося времени).<br>
+                    - Если не успевает или ошибается, баллы за этот раунд не начисляются.<br>
+                    После завершения розыгрыша очков начинается следующий раунд с новой картинкой.<br>
+                    После завершения последнего раунда подсчитывается общее количество баллов. Побеждает игрок с наибольшей суммой.
+                </div>
+            </div>
+            <div class="lang-switch" onclick="switchToOs()">ОСЕТ</div>
+        </div>
+    </div>
+
+    <script>
+        // Открыть окно регистрации
+        function openRegister() {
+            document.getElementById('registerModal').style.display = 'flex';
+        }
+        
+        // Закрыть окно регистрации
+        function closeRegister() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
+        
+        // Открыть окно правил (осетинская версия)
+        function openRules() {
+            document.getElementById('rulesModalOs').style.display = 'flex';
+        }
+        
+        // Закрыть окно правил
+        function closeRules() {
+            document.getElementById('rulesModalOs').style.display = 'none';
+            document.getElementById('rulesModalRu').style.display = 'none';
+        }
+        
+        // Переключить на русский язык
+        function switchToRu() {
+            document.getElementById('rulesModalOs').style.display = 'none';
+            document.getElementById('rulesModalRu').style.display = 'flex';
+        }
+        
+        // Переключить на осетинский язык
+        function switchToOs() {
+            document.getElementById('rulesModalRu').style.display = 'none';
+            document.getElementById('rulesModalOs').style.display = 'flex';
+        }
+        
+        // Закрытие по клику на затемненную область
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.style.display = 'none';
+                document.getElementById('rulesModalRu').style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
-

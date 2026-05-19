@@ -2,64 +2,85 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <title>Языковая дуэль — Игра</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>ЧИ РӔВДЗДӔР — Игра</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="screen screen--game">
+    <!-- Верхняя панель -->
     <header class="game-header">
         <div class="players">
-            <div class="player-label player-label--left">
-                <span class="player-name">{{ player1_name }}</span>
-                <span class="player-score" id="score-p1">0</span>
+            <!-- Игрок 1 (слева) -->
+            <div class="player-card player-card--left">
+                <div class="player-name">{{ player1_name }}</div>
+                <div class="player-score" id="score-p1">0</div>
             </div>
-            <div class="round-info">
-                <span>Раунд <span id="current-round">1</span> / {{ max_rounds }}</span>
+            
+            <!-- Центральная информация -->
+            <div class="game-info">
+                <div class="round-badge">РАУНД <span id="current-round">1</span> / {{ max_rounds }}</div>
+                <div class="round-dots" id="round-dots"></div>
+                <div class="game-goal">ССАРУТ РАСТ ДЗЫРД!</div>
+                <div class="game-goal-sub">НАЙДИТЕ ПРАВИЛЬНОЕ СЛОВО!</div>
+                
             </div>
-            <div class="player-label player-label--right">
-                <span class="player-name">{{ player2_name }}</span>
-                <span class="player-score" id="score-p2">0</span>
+            
+            <!-- Игрок 2 (справа) -->
+            <div class="player-card player-card--right">
+                <div class="player-name">{{ player2_name }}</div>
+                <div class="player-score" id="score-p2">0</div>
             </div>
-        </div>
-        <div class="timer-bar-container">
-            <div class="timer-bar" id="timer-bar"></div>
-        </div>
-        <div class="controls-hint">
-            <span>Игрок 1: W/S + Пробел|Shift</span>
-            <span>Игрок 2: ↑/↓ + Enter</span>
-            <span>Esc — выход в меню</span>
         </div>
     </header>
 
+    <!-- Основной игровой контент -->
     <main class="game-layout">
-        <section class="options options--left">
+        <!-- Варианты ответов левого игрока -->
+        <section class="options-panel options-panel--left">
             <ul id="options-left" class="options-list">
                 <!-- JS заполняет варианты -->
             </ul>
+            <div class="controls-hint controls-hint--left">
+                <span>W/S — вверх/вниз</span>
+                <span>Пробел/Shift — выбор</span>
+            </div>
         </section>
 
-        <section class="image-center">
+        <!-- Центральное изображение -->
+        <section class="image-panel">
             <div class="image-frame">
                 <img id="center-image" src="" alt="Слово" />
             </div>
         </section>
 
-        <section class="options options--right">
+        <!-- Варианты ответов правого игрока -->
+        <section class="options-panel options-panel--right">
             <ul id="options-right" class="options-list">
                 <!-- JS заполняет варианты -->
             </ul>
+            <div class="controls-hint controls-hint--right">
+                <span>↑/↓ — вверх/вниз</span>
+                <span>Enter — выбор</span>
+            </div>
         </section>
     </main>
 
+    <!-- Скрытый элемент для таймера (нужен для работы JS, но не визуализируется) -->
+    <div style="display: none;">
+        <div id="timer-bar"></div>
+    </div>
+
+    
     <script>
         const GAME_CONFIG = {
             maxRounds: {{ max_rounds }},
             apiRoundUrl: "{{ url_for('api_round') }}",
             resultsUrl: "{{ url_for('results') }}",
-            player1Name: "{{ player1_name }}",
-            player2Name: "{{ player2_name }}",
+            player1Name: "{{ player1_name | escape }}",
+            player2Name: "{{ player2_name | escape }}"
         };
     </script>
     <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+
 </body>
 </html>
-
