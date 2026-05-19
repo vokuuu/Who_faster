@@ -65,10 +65,11 @@ body {
 }
 
 .profile-icon {
-    width: min(60px, 8vw);
-    height: min(60px, 8vw);
+    width: min(50px, 8vw);
+    height: min(50px, 8vw);
     background: #3A75C4;
     border-radius: 50%;
+    margin-top: -4px;
     cursor: pointer;
     transition: transform 0.2s;
     background-image: url('../images/profile.png');
@@ -783,8 +784,8 @@ body {
     }
 
     .profile-icon {
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
     }
 
     .menu-icon {
@@ -870,6 +871,43 @@ body {
 
 /* Landscape phone — very short screen */
 @media (max-height: 420px) {
+    .header {
+        padding: 8px 16px;
+    }
+
+    .profile-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .menu-icon {
+        width: 24px;
+        height: 20px;
+    }
+
+    .game-title {
+        top: 46%;
+        font-size: clamp(36px, 9vw, 70px);
+    }
+
+    .buttons {
+        bottom: min(16px, 4vh);
+        gap: 10px;
+    }
+
+    .btn {
+        height: auto;
+        padding: 8px 20px;
+    }
+
+    .btn-main-text {
+        font-size: clamp(14px, 3.5vw, 22px);
+    }
+
+    .btn-sub-text {
+        font-size: clamp(9px, 1.8vw, 12px);
+    }
+
     .screen--game {
         padding: 6px 12px;
     }
