@@ -36,7 +36,14 @@
                 <span class="btn-main-text">æгъдæуттæ</span>
                 <span class="btn-sub-text">правила</span>
             </button>
+            <button class="btn btn-rules" onclick="testApi()">
+                <span class="btn-main-text">тест API</span>
+                <span class="btn-sub-text">проверить</span>
+            </button>
         </div>
+
+        <!-- Блок ответа API -->
+        <div id="api-result" style="display:none; margin-top:16px; padding:12px 20px; background:rgba(0,0,0,0.6); border-radius:10px; color:#fff; font-family:monospace; font-size:14px; max-width:320px; word-break:break-all; text-align:left;"></div>
     </div>
 
     <!-- ОКНО РЕГИСТРАЦИИ -->
@@ -111,6 +118,19 @@
     </div>
 
     <script>
+        async function testApi() {
+            const box = document.getElementById('api-result');
+            box.style.display = 'block';
+            box.textContent = 'Загрузка...';
+            try {
+                const res = await fetch('http://158.160.104.26:9001/api/users/id');
+                const data = await res.json();
+                box.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                box.textContent = 'Ошибка: ' + err.message;
+            }
+        }
+
         // Открыть окно регистрации
         function openRegister() {
             document.getElementById('registerModal').style.display = 'flex';
