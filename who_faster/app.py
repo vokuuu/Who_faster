@@ -105,6 +105,7 @@ def build_round_payload():
 
     left_options = options_words + [none_option]
     right_options = [dict(opt) for opt in left_options]
+    random.shuffle(right_options)
 
     image_url = url_for("static", filename=center_card.image_path)
 
